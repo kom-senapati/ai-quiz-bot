@@ -8,6 +8,7 @@ This project is a quiz application powered by AI (mdb.ai). It allows users to cr
         <img src="https://img.freepik.com/free-vector/modern-red-video-media-player-template_1017-23409.jpg"/>
     </a>
 </p>
+
 ---
 
 ### Tech Stack
