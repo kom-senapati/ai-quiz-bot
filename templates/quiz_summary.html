@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="my-4">{{ topic }} Quiz Summary</h1>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h2>Results</h2>
+        <p>Total Questions: <strong>{{ questions|length }}</strong></p>
+        <p>Correct Answers: <strong>{{ correct_count }}</strong></p>
+        <p>Percentage: <strong>{{ percentage }}%</strong></p>
+        <a href="{{ url_for('quizzes') }}" class="btn btn-primary mt-3">Back to Quizzes</a>
+    </div>
+</div>
+
+<h2 class="mt-4">Questions and Answers</h2>
+{% for question in questions %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h5>{{ question['question'] }}</h5>
+        <div class="form-check {% if answers['question' + loop.index|string] == 'A' %}{% if question['correct_answer'] == 'A' %}bg-success text-white{% else %}bg-danger text-white{% endif %}{% else %}{% if question['correct_answer'] == 'A' %}bg-success-light{% endif %}{% endif %}">
+            <label class="form-check-label">{{ question['option_a'] }}</label>
+        </div>
+        <div class="form-check {% if answers['question' + loop.index|string] == 'B' %}{% if question['correct_answer'] == 'B' %}bg-success text-white{% else %}bg-danger text-white{% endif %}{% else %}{% if question['correct_answer'] == 'B' %}bg-success-light{% endif %}{% endif %}">
+            <label class="form-check-label">{{ question['option_b'] }}</label>
+        </div>
+        <div class="form-check {% if answers['question' + loop.index|string] == 'C' %}{% if question['correct_answer'] == 'C' %}bg-success text-white{% else %}bg-danger text-white{% endif %}{% else %}{% if question['correct_answer'] == 'C' %}bg-success-light{% endif %}{% endif %}">
+            <label class="form-check-label">{{ question['option_c'] }}</label>
+        </div>
+        <div class="form-check {% if answers['question' + loop.index|string] == 'D' %}{% if question['correct_answer'] == 'D' %}bg-success text-white{% else %}bg-danger text-white{% endif %}{% else %}{% if question['correct_answer'] == 'D' %}bg-success-light{% endif %}{% endif %}">
+            <label class="form-check-label">{{ question['option_d'] }}</label>
+        </div>
+        <p class="mt-2">Correct Answer: <strong>{{ question['correct_answer'] }}</strong></p>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

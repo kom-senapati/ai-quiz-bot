@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="my-4">{{ topic }} Quiz</h1>
+{% if questions %}
+<form method="post" action="{{ url_for('quiz', topic=topic) }}">
+    <div id="quiz-questions">
+        {% for question in questions %}
+        <div class="quiz-question" id="question{{ loop.index }}" {% if loop.index != 1 %}style="display: none;"{% endif %}>
+            <h5>{{ question['question'] }}</h5>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_a" value="A">
+                <label class="form-check-label" for="question{{ loop.index }}_a">{{ question['option_a'] }}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_b" value="B">
+                <label class="form-check-label" for="question{{ loop.index }}_b">{{ question['option_b'] }}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_c" value="C">
+                <label class="form-check-label" for="question{{ loop.index }}_c">{{ question['option_c'] }}</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_d" value="D">
+                <label class="form-check-label" for="question{{ loop.index }}_d">{{ question['option_d'] }}</label>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mt-4">
+        <button type="button" class="btn btn-secondary" id="prevBtn" onclick="showPrevQuestion()" style="display: none;">Previous</button>
+        <button type="button" class="btn btn-primary" id="nextBtn" onclick="showNextQuestion()">Next</button>
+        <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Submit</button>
+    </div>
+</form>
+<script>
+    let currentQuestion = 1;
+    const totalQuestions = {{ questions|length }};
+    
+    function showPrevQuestion() {
+        document.getElementById(`question${currentQuestion}`).style.display = 'none';
+        currentQuestion -= 1;
+        document.getElementById(`question${currentQuestion}`).style.display = 'block';
+        updateButtons();
+    }
+
+    function showNextQuestion() {
+        document.getElementById(`question${currentQuestion}`).style.display = 'none';
+        currentQuestion += 1;
+        document.getElementById(`question${currentQuestion}`).style.display = 'block';
+        updateButtons();
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').style.display = currentQuestion === 1 ? 'none' : 'inline-block';
+        document.getElementById('nextBtn').style.display = currentQuestion === totalQuestions ? 'none' : 'inline-block';
+        document.getElementById('submitBtn').style.display = currentQuestion === totalQuestions ? 'inline-block' : 'none';
+    }
+</script>
+
+{% else %}
+    <p>No quiz available. Please create one.</p>
+    <form method="post" action="{{ url_for('create_quiz', topic=topic) }}">
+        <button type="submit" class="btn btn-primary">Create Quiz</button>
+    </form>
+{% endif %}
+{% endblock %}

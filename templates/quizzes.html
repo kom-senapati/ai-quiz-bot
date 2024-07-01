@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="my-4">Available Quizzes</h1>
+<div class="row">
+    {% for topic in topics %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ topic }}</h5>
+                <a href="{{ url_for('quiz', topic=topic) }}" class="btn btn-primary">Start Quiz</a>
+                <a href="{{ url_for('delete_quiz', topic=topic) }}" class="btn btn-danger">Delete Quiz</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Create a New Quiz</h5>
+                <form action="{{ url_for('create_quiz', topic='new_topic') }}" method="post">
+                    <div class="form-group">
+                        <label for="new_topic">Topic:</label>
+                        <input type="text" class="form-control" id="new_topic" name="new_topic" placeholder="Enter quiz topic" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Generate Quiz by AI</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
