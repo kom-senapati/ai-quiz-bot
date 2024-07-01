@@ -31,12 +31,12 @@ server.ml_engines.create(
     connection_data={"minds_endpoint_api_key": os.getenv("API_KEY")},
 )
 
-project = server.create_project("ai_quiz_bot")
+project = server.get_project("ai_quiz_bot")
 
-my_model = project.models.create(
-    name="quiz_generator",
+project.models.create(
+    name="quizzes_generator",
     predict="quiz_data",
     engine="minds_endpoint_engine",
-    prompt_template="Generate a quiz question about {{topic}} with 4 multiple-choice options (A, B, C, D) and the correct answer. Format the output as: Question: [question text] Options: A) [option A] B) [option B] C) [option C] D) [option D] Correct Answer: [correct option letter]"
+    max_tokens=512,
+    prompt_template="Generate only {{number_of_questions}} short quiz questions about {{topic}} with 4 multiple-choice options (A, B, C, D) and the correct option letter. Format the output in parsable json as: [{'q':...,A,B,C,D,correct},{...}]",
 )
-
