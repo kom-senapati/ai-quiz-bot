@@ -1,0 +1,3 @@
+mindsdb_sdk
+python-dotenv
+pandas
