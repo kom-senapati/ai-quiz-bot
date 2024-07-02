@@ -31,6 +31,7 @@ server.ml_engines.create(
     connection_data={"minds_endpoint_api_key": os.getenv("API_KEY")},
 )
 
+project = server.create_project("ai_quiz_bot")
 project = server.get_project("ai_quiz_bot")
 
 project.models.create(
