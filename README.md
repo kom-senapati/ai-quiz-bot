@@ -2,13 +2,22 @@
 This project is a quiz application powered by AI (mdb.ai). It allows users to create, play, and manage quizzes using MindsDB for predictive capabilities.
 
 ### :movie_camera: Demo
-[Include a screen recording or link to a video demonstration of your project. If the video file is large, consider uploading it to YouTube and providing a thumbnail that links to the video.]
 
 <p align="center">
     <a href="https://youtu.be/CzCmC0yAtOU">
         <img src="https://img.freepik.com/free-vector/modern-red-video-media-player-template_1017-23409.jpg"/>
     </a>
 </p>
+
+---
+
+### Tech Stack
+
+- Python 🐍
+- Flask 🌐
+- SQLite 🗃️
+- MindsDB 🧠
+- HTML + Bootstrap 🌐🅱️
 
 ---
 
