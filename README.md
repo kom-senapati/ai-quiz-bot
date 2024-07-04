@@ -4,7 +4,7 @@ This project is a quiz application powered by AI (mdb.ai). It allows users to cr
 ### :movie_camera: Demo
 
 <p align="center">
-    <a href="https://youtu.be/CzCmC0yAtOU">
+    <a href="https://youtu.be/OyXAVWfTK9s">
         <img src="https://img.freepik.com/free-vector/modern-red-video-media-player-template_1017-23409.jpg"/>
     </a>
 </p>
