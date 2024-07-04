@@ -1,5 +1,6 @@
+# AI Quiz App
 
-This project is a quiz application powered by AI (mdb.ai). It allows users to create, play, and manage quizzes using MindsDB for predictive capabilities.
+This project is a quiz application powered by AI (mdb.ai). It allows users to create, play, and manage quizzes.
 
 ### :movie_camera: Demo
 
@@ -17,7 +18,7 @@ This project is a quiz application powered by AI (mdb.ai). It allows users to cr
 - Flask 🌐
 - SQLite 🗃️
 - MindsDB 🧠
-- HTML + Bootstrap 🌐🅱️
+- Tailwind CSS + Bootstrap 🎨🅱️
 
 ---
 
@@ -73,16 +74,11 @@ If you find this project useful, please consider starring the repository on GitH
 
 ---
 
-### 👥 Meet the Author
+<h3 align="center">🌟 Meet the Author</h3>
 
-[![GitHub Profile](https://img.shields.io/badge/GitHub-kom_senapati-blue?logo=github)](https://github.com/kom-senapati)
-
-### :email: Contact 
-
-<p align="left">
-<a href="https://twitter.com/kom_senapati" target="blank"><img align="center" src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="komx" /></a>
-</p>
-<p align="left">
-<a href="https://www.linkedin.com/in/kom-senapati/" target="blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="komin" /></a>
+<p align="center">
+  <a href="https://github.com/kom-senapati" target="_blank"><img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Profile" /></a>
+  <a href="https://twitter.com/kom_senapati" target="_blank"><img src="https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white" alt="Twitter Profile" /></a>
+  <a href="https://www.linkedin.com/in/kom-senapati/" target="_blank"><img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Profile" /></a>
 </p>
 
