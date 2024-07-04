@@ -1,41 +1,78 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1 class="my-4">{{ topic }} Quiz</h1>
-{% if questions %}
-<form method="post" action="{{ url_for('quiz', topic=topic) }}">
-    <div id="quiz-questions">
-        {% for question in questions %}
-        <div class="quiz-question" id="question{{ loop.index }}" {% if loop.index != 1 %}style="display: none;"{% endif %}>
-            <h5>{{ question['question'] }}</h5>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_a" value="A">
-                <label class="form-check-label" for="question{{ loop.index }}_a">{{ question['option_a'] }}</label>
+<div class="container mt-4">
+    <h1 class="my-4 text-center">{{ topic }} Quiz</h1>
+
+    {% if questions %}
+    <form method="post" action="{{ url_for('quiz', topic=topic) }}" class="border rounded-lg p-4 shadow-sm">
+        <div id="quiz-questions" class="mb-4">
+            {% for question in questions %}
+            <div class="quiz-question mb-4" id="question{{ loop.index }}" {% if loop.index != 1 %}style="display: none;"{% endif %}>
+                <h2 style="color: blue; text-align: center;">Q{{ loop.index }}/{{ questions|length }}</h2>
+                <h5 class="mb-3">{{ question['question'] }}</h5>
+                <div class="form-check mb-2">
+                    <input class="form-check-input visually-hidden" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_a" value="A">
+                    <label class="form-check-label" for="question{{ loop.index }}_a" onclick="toggleCheck(this, 'A')">
+                        <span class="checkmark">☐</span> {{ question['option_a'] }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input visually-hidden" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_b" value="B">
+                    <label class="form-check-label" for="question{{ loop.index }}_b" onclick="toggleCheck(this, 'B')">
+                        <span class="checkmark">☐</span> {{ question['option_b'] }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input visually-hidden" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_c" value="C">
+                    <label class="form-check-label" for="question{{ loop.index }}_c" onclick="toggleCheck(this, 'C')">
+                        <span class="checkmark">☐</span> {{ question['option_c'] }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input visually-hidden" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_d" value="D">
+                    <label class="form-check-label" for="question{{ loop.index }}_d" onclick="toggleCheck(this, 'D')">
+                        <span class="checkmark">☐</span> {{ question['option_d'] }}
+                    </label>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_b" value="B">
-                <label class="form-check-label" for="question{{ loop.index }}_b">{{ question['option_b'] }}</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_c" value="C">
-                <label class="form-check-label" for="question{{ loop.index }}_c">{{ question['option_c'] }}</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="question{{ loop.index }}" id="question{{ loop.index }}_d" value="D">
-                <label class="form-check-label" for="question{{ loop.index }}_d">{{ question['option_d'] }}</label>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    <div class="mt-4">
-        <button type="button" class="btn btn-secondary" id="prevBtn" onclick="showPrevQuestion()" style="display: none;">Previous</button>
-        <button type="button" class="btn btn-primary" id="nextBtn" onclick="showNextQuestion()">Next</button>
-        <button type="submit" class="btn btn-success" id="submitBtn" style="display: none;">Submit</button>
-    </div>
-</form>
+        
+        <div class="text-center mb-4">
+            {% if questions|length > 1 %}
+                <button type="button" class="btn btn-warning mr-2 btn-lg" id="skipBtn" onclick="skipQuestion()">Skip 🔄</button>
+            {% endif %}
+            <button type="button" class="btn btn-primary btn-lg" id="prevBtn" onclick="showPrevQuestion()">Previous ⬅️</button>
+            <button type="button" class="btn btn-primary btn-lg" id="nextBtn" onclick="showNextQuestion()">Next ➡️</button>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <button type="submit" class="btn btn-success btn-lg" id="submitBtn">Submit 🚀</button>
+        </div>
+    </form>
+    {% else %}
+    <p>No quiz available. Please create one.</p>
+    <form method="post" action="{{ url_for('create_quiz', topic=topic) }}">
+        <button type="submit" class="btn btn-primary">Create Quiz</button>
+    </form>
+    {% endif %}
+</div>
+
 <script>
     let currentQuestion = 1;
     const totalQuestions = {{ questions|length }};
-    
+
+    function skipQuestion() {
+        currentQuestion += 1;
+        if (currentQuestion <= totalQuestions) {
+            document.getElementById(`question${currentQuestion - 1}`).style.display = 'none';
+            document.getElementById(`question${currentQuestion}`).style.display = 'block';
+            updateButtons();
+        } else {
+            currentQuestion = totalQuestions;
+        }
+    }
+
     function showPrevQuestion() {
         document.getElementById(`question${currentQuestion}`).style.display = 'none';
         currentQuestion -= 1;
@@ -51,16 +88,46 @@
     }
 
     function updateButtons() {
-        document.getElementById('prevBtn').style.display = currentQuestion === 1 ? 'none' : 'inline-block';
-        document.getElementById('nextBtn').style.display = currentQuestion === totalQuestions ? 'none' : 'inline-block';
-        document.getElementById('submitBtn').style.display = currentQuestion === totalQuestions ? 'inline-block' : 'none';
+        if (currentQuestion === 1) {
+            document.getElementById('prevBtn').style.display = 'none';
+        } else {
+            document.getElementById('prevBtn').style.display = 'inline-block';
+        }
+    
+        if (currentQuestion === totalQuestions) {
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('skipBtn').style.display = 'none';
+        } else {
+            document.getElementById('nextBtn').style.display = 'inline-block';
+            document.getElementById('skipBtn').style.display = 'inline-block';
+        }
+    }    
+
+    function toggleCheck(label, option) {
+        const input = label.previousElementSibling;
+        const checkmark = label.querySelector('.checkmark');
+        
+        // Toggle checkmark and input checked state
+        if (input.checked) {
+            input.checked = false;
+            checkmark.textContent = '☐';
+        } else {
+            input.checked = true;
+            checkmark.textContent = '☑️';
+        }
     }
+
+    updateButtons()
 </script>
 
-{% else %}
-    <p>No quiz available. Please create one.</p>
-    <form method="post" action="{{ url_for('create_quiz', topic=topic) }}">
-        <button type="submit" class="btn btn-primary">Create Quiz</button>
-    </form>
-{% endif %}
+<style>
+    .checkmark {
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+    .visually-hidden {
+        position: absolute;
+        left: -9999px;
+    }
+</style>
 {% endblock %}
